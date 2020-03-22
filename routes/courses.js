@@ -11,4 +11,9 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get('/:id',(req,res)=>{
+  res.render('course')
+})
+
+
 module.exports = router;
