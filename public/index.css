@@ -6,22 +6,22 @@
   font-size: 2rem;
 }
 
-.course{
+.course {
   width: 100%;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
 }
 
-.course h1{
+.course h1 {
   margin-bottom: 2rem;
 }
 
-.course img{
-  min-width: 600px;
+.course img {
+  max-width: 600px;
   height: auto;
 }
 
 .course .price.big {
-font-style: 2rem;
+  font-size: 2.5rem;
 }
