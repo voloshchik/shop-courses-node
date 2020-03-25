@@ -31,19 +31,24 @@ const PORT = process.env.PORT || 3000;
 async function start() {
   try {
     const url =
-      "mongodb+srv://vladimir:knZIBD9pup3LacPG@cluster0-ikqau.mongodb.net/shop";
-    await mongoose.connect(url, { useNewUrlParser: true });
+      "mongodb+srv://vladimir:SRs1OrGV1zuNCLm6@cluster0-ikqau.mongodb.net/shop";
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true 
+    });
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (err) {
-    console.log(err);
+    console.log("error111", err);
   }
 }
 
 start();
 
-const password = "knZIBD9pup3LacPG";
-const url =
-  "mongodb+srv://vladimir:knZIBD9pup3LacPG@cluster0-ikqau.mongodb.net/shop";
+// const password = "knZIBD9pup3LacPG";
+// const password1 = "SRs1OrGV1zuNCLm6";
+// const url =
+//   "mongodb+srv://vladimir:knZIBD9pup3LacPG@cluster0-ikqau.mongodb.net/shop";
