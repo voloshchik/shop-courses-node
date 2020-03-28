@@ -13,16 +13,21 @@ const orderSchema = new Schema({
       }
     }
   ],
-  userId: {
+  user: {
     name: String,
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    }
   },
   date: {
     type: Date,
     default: Date.now
   }
 });
+
+
+
 
 module.exports = model("Order", orderSchema);
