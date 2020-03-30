@@ -8,7 +8,7 @@
     </div>
     <div id="login" class="col s6 offset-s3 ">
         <h2>Войти в магазин</h2>
-        <form action="/add" method="POST">
+        <form action="/auth/login" method="POST">
             <div class="input-field">
                 <input id="email" name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
@@ -26,7 +26,8 @@
         </form>
     </div>
     <div id="register" class="col s6 offset-s3">
-        <form action="/add" method="POST">
+        <h2>Создать аккаунт</h2>
+        <form action="/auth/register" method="POST">
             <div class="input-field">
                 <input id="remail" name="email" type="email" class="validate" required>
                 <label for="remail">Email</label>
@@ -45,7 +46,7 @@
             </div>
 
 
-            <button class="btn btn-primary">Добавить курс</button>
+            <button class="btn btn-primary">Войти</button>
         </form>
 
     </div>

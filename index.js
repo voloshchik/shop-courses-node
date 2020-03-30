@@ -2,13 +2,16 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
+const session = require("express-session");
+
+const varMiddleware = require("./middleware/variables");
+
 const homeRoutes = require("./routes/home");
 const cardRoutes = require("./routes/card");
 const addRoutes = require("./routes/add");
 const coursesRoutes = require("./routes/courses");
-const ordersRoutes=require('./routes/orders')
-const authRoutes=require('./routes/auth')
-
+const ordersRoutes = require("./routes/orders");
+const authRoutes = require("./routes/auth");
 
 const User = require("./models/user");
 
@@ -27,7 +30,7 @@ app.use(async (req, res, next) => {
   try {
     const user = await User.findById("5e7cc9b33a2c893de2afd62f");
     req.user = user;
-    next()
+    next();
   } catch (error) {
     console.log(error);
   }
@@ -36,13 +39,22 @@ app.use(async (req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  session({
+    secret: "Some secret value",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(varMiddleware);
+
 app.use("/", homeRoutes);
 app.use("/add", addRoutes);
 app.use("/courses", coursesRoutes);
 app.use("/card", cardRoutes);
-app.use('/orders',ordersRoutes)
-app.use('/auth',authRoutes)
-
+app.use("/orders", ordersRoutes);
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
