@@ -3,7 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
-
+const MongoStore=require('connect-mongodb-session')(session)
 const varMiddleware = require("./middleware/variables");
 
 const homeRoutes = require("./routes/home");
@@ -21,6 +21,13 @@ const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs"
 });
+
+const MONGODB_URL="mongodb+srv://vladimir:SRs1OrGV1zuNCLm6@cluster0-ikqau.mongodb.net/shop";
+
+const store=new MongoStore({
+  collection:'sessions',
+  uri:MONGODB_URL
+})
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
@@ -43,7 +50,8 @@ app.use(
   session({
     secret: "Some secret value",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store
   })
 );
 
@@ -60,9 +68,8 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    const url =
-      "mongodb+srv://vladimir:SRs1OrGV1zuNCLm6@cluster0-ikqau.mongodb.net/shop";
-    await mongoose.connect(url, {
+    
+    await mongoose.connect(MONGODB_URL, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true
