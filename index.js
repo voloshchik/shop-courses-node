@@ -26,15 +26,15 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(async (req, res, next) => {
-  try {
-    const user = await User.findById("5e7cc9b33a2c893de2afd62f");
-    req.user = user;
-    next();
-  } catch (error) {
-    console.log(error);
-  }
-});
+// app.use(async (req, res, next) => {
+//   try {
+//     const user = await User.findById("5e7cc9b33a2c893de2afd62f");
+//     req.user = user;
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -68,15 +68,15 @@ async function start() {
       useUnifiedTopology: true
     });
 
-    const candidate = await User.findOne();
-    if (!candidate) {
-      const user = new User({
-        email: "lovkiy2012@gmail.com",
-        name: "Vladimir",
-        cart: { items: [] }
-      });
-      await user.save();
-    }
+    // const candidate = await User.findOne();
+    // if (!candidate) {
+    //   const user = new User({
+    //     email: "lovkiy2012@gmail.com",
+    //     name: "Vladimir",
+    //     cart: { items: [] }
+    //   });
+    //   await user.save();
+    // }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
