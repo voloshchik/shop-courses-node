@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const User=require('../models/user')
+const User = require("../models/user");
 
 const router = Router();
 
@@ -24,9 +24,30 @@ router.post("/login", async (req, res) => {
     if (err) {
       throw err;
     } else {
-    res.redirect("/");
+      res.redirect("/");
     }
   });
+});
+
+router.post("/register", async (req, res) => {
+  try {
+    const { email, password,name, repeat } = req.body;
+
+    const candidate=await User.findOne({email})
+
+    if(candidate){
+      return res.redirect('/auth/login#register')
+    }else{
+      const user=new User({
+        email,name,password,cart:{items:[]}
+      })
+      user.save()
+      res.redirect('/auth/login#login')
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
