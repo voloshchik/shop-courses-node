@@ -5,6 +5,7 @@ const exphbs = require("express-handlebars");
 const session = require("express-session");
 const MongoStore=require('connect-mongodb-session')(session)
 const varMiddleware = require("./middleware/variables");
+const userMiddleware=require('./middleware/user')
 
 const homeRoutes = require("./routes/home");
 const cardRoutes = require("./routes/card");
@@ -56,6 +57,7 @@ app.use(
 );
 
 app.use(varMiddleware);
+app.use(userMiddleware)
 
 app.use("/", homeRoutes);
 app.use("/add", addRoutes);
