@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const csrf = require('csurf')
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
@@ -34,15 +35,6 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-// app.use(async (req, res, next) => {
-//   try {
-//     const user = await User.findById("5e7cc9b33a2c893de2afd62f");
-//     req.user = user;
-//     next();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -55,7 +47,7 @@ app.use(
     store
   })
 );
-
+app.use(csrf())
 app.use(varMiddleware);
 app.use(userMiddleware)
 
