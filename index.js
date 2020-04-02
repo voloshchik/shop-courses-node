@@ -8,6 +8,7 @@ const session = require("express-session");
 const MongoStore=require('connect-mongodb-session')(session)
 const varMiddleware = require("./middleware/variables");
 const userMiddleware=require('./middleware/user')
+const keys=require('./keys')
 
 const homeRoutes = require("./routes/home");
 const cardRoutes = require("./routes/card");
@@ -25,11 +26,11 @@ const hbs = exphbs.create({
   extname: "hbs"
 });
 
-const MONGODB_URL="mongodb+srv://vladimir:SRs1OrGV1zuNCLm6@cluster0-ikqau.mongodb.net/shop";
+
 
 const store=new MongoStore({
   collection:'sessions',
-  uri:MONGODB_URL
+  uri:keys.MONGODB_URL
 })
 
 app.engine("hbs", hbs.engine);
@@ -42,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "Some secret value",
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store
@@ -65,21 +66,12 @@ const PORT = process.env.PORT || 3000;
 async function start() {
   try {
     
-    await mongoose.connect(MONGODB_URL, {
+    await mongoose.connect(keys.MONGODB_URL, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true
     });
 
-    // const candidate = await User.findOne();
-    // if (!candidate) {
-    //   const user = new User({
-    //     email: "lovkiy2012@gmail.com",
-    //     name: "Vladimir",
-    //     cart: { items: [] }
-    //   });
-    //   await user.save();
-    // }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
@@ -91,7 +83,3 @@ async function start() {
 
 start();
 
-// const password = "knZIBD9pup3LacPG";
-// const password1 = "SRs1OrGV1zuNCLm6";
-// const url =
-//   "mongodb+srv://vladimir:knZIBD9pup3LacPG@cluster0-ikqau.mongodb.net/shop";
