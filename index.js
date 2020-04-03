@@ -17,7 +17,7 @@ const coursesRoutes = require("./routes/courses");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 
-const User = require("./models/user");
+
 
 const app = express();
 

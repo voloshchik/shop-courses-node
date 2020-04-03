@@ -7,3 +7,5 @@ module.exports = {
   EMAIL_FROM: "nodecourses@gmail.com",
   BASE_URL: "http://localhost:3000",
 };
+
+
