@@ -91,28 +91,28 @@ router.get("/reset", (req, res) => {
     error: req.flash("error"),
   });
 });
-router.post("/reset", (req, res) => {
+
+router.get("/password/:token", async (req, res) => {
+  if (!req.params.token) {
+    return res.redirect("/auth/login");
+  }
+
   try {
-    crypto.randomBytes(32, async (err, buffer) => {
-      if (err) {
-        req.flash("error", "Что-то пошло не так, повторите попытку позже");
-        return res.redirect("/auth/reset");
-      }
-
-      const token = buffer.toString("hex");
-      const candidate = await User.findOne({ email: req.body.email });
-
-      if (candidate) {
-        candidate.resetToken = token;
-        candidate.resetTokenExp = Date.now() + 60 * 60 * 1000;
-        await candidate.save();
-        await transporter.sendMail(resetEmail(candidate.email, token));
-        res.redirect("/auth/login");
-      } else {
-        req.flash("error", "Такого email нет");
-        res.redirect("/auth/reset");
-      }
+    const user = await User.findOne({
+      resetToken: req.params.token,
+      resetTokenExp: { $gt: Date.now() },
     });
+
+    if (!user) {
+      return res.redirect("/auth/login");
+    } else {
+      res.render("auth/password", {
+        title: "Восстановить доступ",
+        error: req.flash("error"),
+        userId: user._id.toString(),
+        token: req.params.token,
+      });
+    }
   } catch (e) {
     console.log(e);
   }
