@@ -64,8 +64,8 @@ router.post("/edit", auth, async (req, res) => {
     if (isOwner(course, req)) {
       return res.redirect("/courses");
     }
-Object.assign(course,req.body)
-    await  course.save()
+    Object.assign(course, req.body);
+    await course.save();
     res.redirect("/courses");
   } catch (error) {
     console.log(error);
