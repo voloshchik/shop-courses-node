@@ -16,6 +16,9 @@ const addRoutes = require("./routes/add");
 const coursesRoutes = require("./routes/courses");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
+const profileRoutes=require('./routes/profile')
+
+
 const errorHandler=require('./middleware/error')
 
 
@@ -64,6 +67,7 @@ app.use("/courses", coursesRoutes);
 app.use("/card", cardRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/auth", authRoutes);
+app.use('/profile',profileRoutes)
 
 app.use(errorHandler)
 
