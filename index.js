@@ -8,6 +8,7 @@ const session = require("express-session");
 const MongoStore=require('connect-mongodb-session')(session)
 const varMiddleware = require("./middleware/variables");
 const userMiddleware=require('./middleware/user')
+const fileMiddleware=require('./middleware/file')
 const keys=require('./keys')
 
 const homeRoutes = require("./routes/home");
@@ -56,6 +57,7 @@ app.use(
     store
   })
 );
+app.use(fileMiddleware.single('avatar'))
 app.use(csrf())
 app.use(flash())
 app.use(varMiddleware);
